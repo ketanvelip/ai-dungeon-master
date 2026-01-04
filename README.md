@@ -2,6 +2,9 @@
 
 An innovative D&D experience where **YOU are the Dungeon Master** and AI-powered players bring your adventures to life!
 
+![Gameplay Screenshot 1](gameplay1.png)
+![Gameplay Screenshot 2](gameplay2.png)
+
 ## Concept
 
 Unlike traditional AI D&D games where AI is the DM, this flips the script:
@@ -23,7 +26,7 @@ Unlike traditional AI D&D games where AI is the DM, this flips the script:
 - **Frontend**: React with modern UI
 - **Backend**: FastAPI (Python)
 - **Database**: PostgreSQL
-- **AI**: GPT-4 for character agents
+- **AI**: OpenAI GPT-4o (configurable via environment variable)
 - **Deployment**: Docker Compose
 
 ## Quick Start
@@ -75,12 +78,18 @@ docker-compose exec backend bash
 
 ## Environment Variables
 
-Create a `.env` file in the backend directory:
+Create a `.env` file in the **root directory** (required for Docker):
 
+```bash
+# Required
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional (defaults to gpt-4o)
+OPENAI_MODEL=gpt-4o
+# Available models: gpt-5, gpt-5-mini, gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-3.5-turbo
 ```
-OPENAI_API_KEY=your_api_key_here
-DATABASE_URL=postgresql://user:password@localhost:5432/dungeon_master
-```
+
+See `.env.example` for reference.
 
 ## License
 

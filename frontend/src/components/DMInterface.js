@@ -18,7 +18,7 @@ function DMInterface({ campaignId, characters, onNewMessages }) {
     setMessage('');
 
     try {
-      const response = await axios.post(`/campaigns/${campaignId}/dm-input`, {
+      const response = await axios.post(`/api/campaigns/${campaignId}/dm-input`, {
         message: dmMessage
       });
 
@@ -50,7 +50,7 @@ function DMInterface({ campaignId, characters, onNewMessages }) {
   const getSuggestions = async () => {
     setLoadingSuggestions(true);
     try {
-      const response = await axios.post(`/dm-assistant/scenarios`, {
+      const response = await axios.post(`/api/dm-assistant/scenarios`, {
         context: message || ''
       }, {
         params: { campaign_id: campaignId }
@@ -66,7 +66,7 @@ function DMInterface({ campaignId, characters, onNewMessages }) {
     }
   };
 
-  const useSuggestion = (suggestion) => {
+  const applySuggestion = (suggestion) => {
     const cleanSuggestion = suggestion.replace(/^\d+\.\s*/, '');
     setMessage(cleanSuggestion);
     setShowSuggestions(false);
@@ -101,7 +101,7 @@ function DMInterface({ campaignId, characters, onNewMessages }) {
               <div 
                 key={idx} 
                 className="suggestion-item"
-                onClick={() => useSuggestion(suggestion)}
+                onClick={() => applySuggestion(suggestion)}
               >
                 {suggestion}
               </div>

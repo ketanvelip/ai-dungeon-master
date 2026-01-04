@@ -18,8 +18,8 @@ function GameInterface({ campaignId, campaignData, onNewGame }) {
   const loadCampaignData = async () => {
     try {
       const [charsResponse, msgsResponse] = await Promise.all([
-        axios.get(`/campaigns/${campaignId}/characters`),
-        axios.get(`/campaigns/${campaignId}/messages`)
+        axios.get(`/api/campaigns/${campaignId}/characters`),
+        axios.get(`/api/campaigns/${campaignId}/messages`)
       ]);
 
       setCharacters(charsResponse.data);

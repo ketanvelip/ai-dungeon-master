@@ -25,8 +25,8 @@
 
 4. **Access the application**
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Docs: http://localhost:8000/docs
+   - Backend API: http://localhost:8000/api
+   - API Docs: http://localhost:8000/api/docs
 
 ## Development Notes
 
@@ -42,15 +42,17 @@ For hot-reloading during development:
 - `OPENAI_API_KEY`: Your OpenAI API key
 
 ### Optional
-- `DATABASE_URL`: PostgreSQL connection string (default: postgresql://dungeon_user:dungeon_pass@localhost:5432/dungeon_master)
+- `OPENAI_MODEL`: AI model to use (default: gpt-4o)
+  - Available: gpt-5, gpt-5-mini, gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-3.5-turbo
+- `DATABASE_URL`: PostgreSQL connection string (handled by Docker, no need to set)
 - `ENVIRONMENT`: development/production (default: development)
 
 ## Troubleshooting
 
 ### Database Connection Issues
-- Ensure PostgreSQL is running
-- Check DATABASE_URL in .env file
-- Verify database exists: `psql -l`
+- Database runs in Docker container automatically
+- Check logs: `docker-compose logs db`
+- Restart database: `docker-compose restart db`
 
 ### OpenAI API Issues
 - Verify API key is correct
@@ -59,9 +61,15 @@ For hot-reloading during development:
 
 ### Port Conflicts
 - Backend uses port 8000
-- Frontend uses port 3000 (dev) or 80 (Docker)
+- Frontend uses port 3000 (mapped from container port 80)
 - PostgreSQL uses port 5432
 - Change ports in docker-compose.yml if needed
+
+### AI Player Responses Not Working
+- Verify OPENAI_API_KEY is set in .env
+- Check backend logs: `docker-compose logs backend`
+- Ensure you have OpenAI API credits
+- Try a different model in OPENAI_MODEL (e.g., gpt-4o-mini for lower cost)
 
 ## Stopping the Application
 

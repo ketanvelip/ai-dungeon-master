@@ -5,9 +5,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Model configuration
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
+
 class DMAssistant:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.model = DEFAULT_MODEL
     
     def suggest_scenarios(self, context: str, party_info: List[Dict]) -> List[str]:
         party_summary = self._summarize_party(party_info)
@@ -30,7 +34,7 @@ Format as a numbered list."""
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=[
                     {"role": "system", "content": "You are a creative D&D scenario generator helping a DM."},
                     {"role": "user", "content": prompt}
@@ -64,7 +68,7 @@ Provide a single line of dialogue (1-2 sentences) that this NPC would say. Make 
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=[
                     {"role": "system", "content": "You are a D&D NPC dialogue generator."},
                     {"role": "user", "content": prompt}
@@ -92,7 +96,7 @@ Keep it brief and balanced for the party level."""
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=[
                     {"role": "system", "content": "You are a D&D encounter designer."},
                     {"role": "user", "content": prompt}

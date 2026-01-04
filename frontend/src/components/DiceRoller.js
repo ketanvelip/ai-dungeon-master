@@ -14,7 +14,7 @@ function DiceRoller({ campaignId }) {
   const rollDice = async () => {
     setRolling(true);
     try {
-      const response = await axios.post(`/campaigns/${campaignId}/roll-dice`, {
+      const response = await axios.post(`/api/campaigns/${campaignId}/roll-dice`, {
         dice_type: selectedDice,
         count: count,
         modifier: modifier

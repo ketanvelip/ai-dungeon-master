@@ -9,7 +9,7 @@ from app.dm_assistant import DMAssistant
 from app.models import Campaign, Character, Message
 import asyncio
 
-app = FastAPI(title="AI Dungeon Master API")
+app = FastAPI(title="AI Dungeon Master API", root_path="/api")
 
 app.add_middleware(
     CORSMiddleware,

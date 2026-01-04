@@ -5,11 +5,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Model configuration
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
+
 class AIPlayer:
     def __init__(self, character: Dict):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.character = character
         self.conversation_history = []
+        self.model = DEFAULT_MODEL
         
     def _build_system_prompt(self) -> str:
         personality_str = ", ".join(self.character["personality_traits"])
@@ -48,23 +52,26 @@ GAME MECHANICS:
 Remember: You are a player in a D&D game, not the Dungeon Master. React to what the DM describes and make choices for your character."""
 
     def get_response(self, dm_message: str, party_context: Optional[List[Dict]] = None) -> str:
-        messages = [{"role": "system", "content": self._build_system_prompt()}]
-        
+        context_text = ""
         if party_context:
-            for msg in party_context[-10:]:
-                messages.append(msg)
+            recent_msgs = party_context[-20:]
+            context_text = "\n".join([f"{msg.get('role', 'unknown')}: {msg.get('content', '')}" for msg in recent_msgs])
+            context_text = f"Recent conversation:\n{context_text}\n\n"
         
-        messages.append({"role": "user", "content": dm_message})
+        full_prompt = f"{self._build_system_prompt()}\n\n{context_text}DM: {dm_message}\n\nRespond as {self.character['name']}:"
         
         try:
-            response = self.client.chat.completions.create(
-                model="gpt-4",
-                messages=messages,
+            response = self.client.responses.create(
+                model=self.model,
+                input=full_prompt,
                 temperature=0.8,
-                max_tokens=200
+                max_output_tokens=200
             )
             
-            return response.choices[0].message.content.strip()
+            content = response.output[0].content
+            if isinstance(content, list):
+                content = content[0].text if hasattr(content[0], 'text') else str(content[0])
+            return content.strip() if isinstance(content, str) else str(content)
         except Exception as e:
             return f"[{self.character['name']} seems distracted and doesn't respond] (Error: {str(e)})"
     

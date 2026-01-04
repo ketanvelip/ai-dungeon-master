@@ -15,7 +15,7 @@ function GameSetup({ onCampaignCreated }) {
     setError('');
 
     try {
-      const response = await axios.post('/campaigns', {
+      const response = await axios.post('/api/campaigns', {
         name: name || 'Untitled Campaign',
         description: description || 'A new adventure begins...',
         party_size: partySize

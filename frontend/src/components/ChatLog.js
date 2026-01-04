@@ -3,9 +3,17 @@ import './ChatLog.css';
 
 function ChatLog({ messages, characters }) {
   const chatEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Only auto-scroll if user is already near the bottom (within 100px)
+    const container = messagesContainerRef.current;
+    if (container) {
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+      if (isNearBottom) {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }, [messages]);
 
   const getCharacterName = (characterId) => {
@@ -54,7 +62,7 @@ function ChatLog({ messages, characters }) {
       <div className="chat-header">
         <h3>Adventure Log</h3>
       </div>
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesContainerRef}>
         {messages.length === 0 ? (
           <div className="empty-state">
             <p>🎭 Your adventure begins...</p>
