@@ -1,0 +1,127 @@
+.chat-log {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.chat-header {
+  padding: 15px 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-header h3 {
+  color: #667eea;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.5);
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.7);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #b0b0b0;
+}
+
+.empty-state p:first-child {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.empty-hint {
+  font-size: 0.9rem;
+  color: #808080;
+}
+
+.message {
+  padding: 15px;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dm-message {
+  background: rgba(102, 126, 234, 0.15);
+  border-left: 4px solid #667eea;
+}
+
+.player-message {
+  background: rgba(118, 75, 162, 0.15);
+  border-left: 4px solid #764ba2;
+}
+
+.system-message {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #808080;
+  font-style: italic;
+  color: #b0b0b0;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.message-author {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.dm-badge {
+  color: #8a9fff;
+}
+
+.player-badge {
+  color: #b794f6;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: #808080;
+}
+
+.message-content {
+  color: #e0e0e0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
