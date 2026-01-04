@@ -85,7 +85,7 @@ Create a `.env` file in the **root directory** (required for Docker):
 OPENAI_API_KEY=your_openai_api_key_here
 
 # Optional (defaults to gpt-4o)
-OPENAI_MODEL=gpt-4o
+OPENAI_MODEL=gpt-5
 # Available models: gpt-5, gpt-5-mini, gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-3.5-turbo
 ```
 
